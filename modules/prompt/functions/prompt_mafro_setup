@@ -1,0 +1,85 @@
+# Load dependencies.
+pmodload 'helper'
+
+function build_prompt {
+  # bold white/cyan user@hostname prompt followed by pwd
+  echo -n '%B%(!.%F{15}.%F{cyan})%n@%m%b%{%F{15}%}:%{%F{cyan}%}'
+
+  # display current dir with $HOME replaced by tilde
+  echo -n "${PWD/#$HOME/~}"
+
+  # python venv info
+  if [[ ! -z ${python_info[virtualenv]} ]]; then
+    echo -n "${python_info[virtualenv]}"
+  else
+    echo -n ' '
+  fi
+
+  # git status info
+  if [[ ! -z ${git_info[prompt]} ]]; then
+    echo -n "${(e)git_info[prompt]}${git_info[status]} "
+  else
+    # display enough whitespace
+    if [[ ! -z ${python_info[virtualenv]} ]]; then
+      echo -n ' '
+    fi
+  fi
+
+  # end prompt
+  echo -n '%F{white}>%f '
+}
+
+function prompt_mafro_precmd {
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
+
+  # Load git and python venv info
+  if (( $+functions[git-info] )); then
+    git-info
+  fi
+  if (( $+functions[python-info] )); then
+    python-info
+  fi
+}
+
+function prompt_mafro_setup {
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
+  prompt_opts=(cr percent subst)
+
+  # Load required functions.
+  autoload -Uz add-zsh-hook
+
+  # Add hook for calling git-info before each command.
+  add-zsh-hook precmd prompt_mafro_precmd
+
+  # Editor plugin
+  zstyle ':prezto:module:editor:info:completing' format '..'
+
+  # Set git-info parameters.
+  zstyle ':prezto:module:git:info' verbose 'yes'
+  zstyle ':prezto:module:git:info:ahead' format '%F{yellow}%A>%f'
+  zstyle ':prezto:module:git:info:behind' format '%F{yellow}<%B%f'
+  zstyle ':prezto:module:git:info:branch' format '%F{yellow}%b%f'
+  zstyle ':prezto:module:git:info:commit' format '%c'
+  zstyle ':prezto:module:git:info:dirty' format '%F{yellow}*%f'
+  zstyle ':prezto:module:git:info:diverged' format '%F{yellow}~%f'
+  zstyle ':prezto:module:git:info:stashed' format '%F{yellow}^%f'
+  zstyle ':prezto:module:git:info:unmerged' format '%F{red}*%f'
+
+  # Format the prompt
+  zstyle ':prezto:module:git:info:keys' format \
+    'prompt' '%F{yellow}[%f%b%D%U%F{yellow}]%f' \
+    'status' '%F{yellow}%V%A%B%S%f'
+
+  # Display virtualenv name
+  zstyle ':prezto:module:python:info:virtualenv' format ' %F{202}[%v]%f'
+
+  # Reset colours and build prompt
+  PROMPT='%{%f%b%k%}$(build_prompt)'
+  # Display command time in rprompt
+  RPROMPT='%F{238}%D{%K:%M:%S}%f'
+}
+
+prompt_mafro_setup "$@"
+
