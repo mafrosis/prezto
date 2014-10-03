@@ -246,6 +246,17 @@ function git-info {
     zformat -f branch_formatted "$branch_format" "b:$branch"
   fi
 
+  # Show action in place of branch; show commit during rebase
+  if [[ -z $action ]]; then
+    action="$(_git-action)"
+  fi
+  if [[ -n $action ]]; then
+    if [[ $action[0,6] == 'rebase' ]]; then
+      action="$(git rev-parse --short HEAD 2> /dev/null)"
+    fi
+    zformat -f branch_formatted "$branch_format" "b:$action"
+  fi
+
   # Format position.
   zstyle -s ':prezto:module:git:info:position' format 'position_format'
   if [[ -z "$branch" && -n "$position_format" ]]; then
