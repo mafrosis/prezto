@@ -290,20 +290,20 @@ function git-info {
     behind="$ahead_and_behind[(w)2]"
     if (( ahead > 0 )) && (( behind > 0 )); then
       zstyle -s ':prezto:module:git:info:diverged' format 'diverged_formatted'
-    fi
+    else
+	  # Format ahead.
+	  if [[ -n "$ahead_format" ]]; then
+	    if (( ahead > 0 )); then
+	  	zformat -f ahead_formatted "$ahead_format" "A:$ahead"
+	    fi
+	  fi
 
-    # Format ahead.
-    if [[ -n "$ahead_format" ]]; then
-      if (( ahead > 0 )); then
-        zformat -f ahead_formatted "$ahead_format" "A:$ahead"
-      fi
-    fi
-
-    # Format behind.
-    if [[ -n "$behind_format" ]]; then
-      if (( behind > 0 )); then
-        zformat -f behind_formatted "$behind_format" "B:$behind"
-      fi
+	  # Format behind.
+	  if [[ -n "$behind_format" ]]; then
+	    if (( behind > 0 )); then
+	  	zformat -f behind_formatted "$behind_format" "B:$behind"
+	    fi
+	  fi
     fi
   fi
 
