@@ -7,8 +7,6 @@
 #   Patrick Bos <egpbos@gmail.com>
 #
 
-# function python-info {
-
 local virtualenv_format
 local virtualenv_formatted
 local version_format
@@ -50,4 +48,12 @@ if [[ -n "$version_format" ]]; then
   fi
 fi
 
-# }
+# Include current python version info
+python_info[version]="$(python -V 2>&1 | cut -d\  -f 2)"
+
+# Set virtualenv colour based on python version
+if [[ ${python_info[version]:0:1} == '2' ]]; then
+  python_info[prompt_colour]=202
+else
+  python_info[prompt_colour]=070
+fi
