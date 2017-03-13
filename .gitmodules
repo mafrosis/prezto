@@ -31,3 +31,6 @@
 [submodule "modules/autoenv/external"]
 	path = modules/autoenv/external
 	url = https://github.com/horosgrisa/autoenv
+[submodule "modules/zsh-autoenv/external"]
+	path = modules/zsh-autoenv/external
+	url = https://github.com/Tarrasch/zsh-autoenv.git

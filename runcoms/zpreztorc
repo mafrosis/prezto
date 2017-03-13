@@ -28,6 +28,12 @@ for _cmd in "${_gnu_cmds[@]}"; do
 done
 
 #
+# ZSH autoenv
+#
+AUTOENV_FILE_ENTER=.env
+AUTOENV_FILE_LEAVE=.out
+
+#
 # General
 #
 
@@ -58,6 +64,7 @@ zstyle ':prezto:load' pmodule \
   'osx' \
   'git' \
   'python' \
+  'zsh-autoenv' \
   'history-substring-search' \
   'prompt'
 
