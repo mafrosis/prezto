@@ -7,6 +7,27 @@
 #
 
 #
+# Use GNU coreutils instead of BSD for some programs
+#
+
+_gnu_cmds=(
+  # Coreutils
+  'cut' 'date' 'dircolors' 'du' 'ls' 'md5sum' 'sort' 'tac' 'touch'
+
+  # Misc
+  'sed'
+)
+for _cmd in "${_gnu_cmds[@]}"; do
+	if [[ -x /usr/local/bin/g${_cmd} ]]; then
+		eval "
+			function ${_cmd} {
+				g${_cmd} \"\$@\"
+			}
+		"
+	fi
+done
+
+#
 # General
 #
 
