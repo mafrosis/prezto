@@ -15,6 +15,12 @@ function build_prompt {
     echo -n ' '
   fi
 
+  # terraform workspace
+  if [[ -f .terraform/environment ]]; then
+    TF_WORKSPACE="$(cat .terraform/environment)"
+    echo -n "%F{63}[${TF_WORKSPACE}]%f"
+  fi
+
   # git status info
   if [[ ! -z ${git_info[prompt]} ]]; then
     echo -n "${(e)git_info[prompt]}${git_info[status]} "
