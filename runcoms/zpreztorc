@@ -61,6 +61,7 @@ zstyle ':prezto:load' pmodule \
   'git' \
   'python' \
   'completion' \
+  'ssh' \
   'history-substring-search' \
   'prompt'
 
