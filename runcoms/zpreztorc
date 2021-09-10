@@ -56,9 +56,8 @@ zstyle ':prezto:load' pmodule \
   'terminal' \
   'history' \
   'directory' \
-  'utility' \
-  'osx' \
   'git' \
+  'osx' \
   'python' \
   'completion' \
   'ssh' \
