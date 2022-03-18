@@ -19,15 +19,26 @@ _ssh_agent_env="${_ssh_agent_env:-${XDG_CACHE_HOME:-$HOME/.cache}/prezto/ssh-age
 # Set the path to the persistent authentication socket if not set by another module.
 _ssh_agent_sock="${_ssh_agent_sock:-${XDG_CACHE_HOME:-$HOME/.cache}/prezto/ssh-agent.sock}"
 
+if [[ -x /usr/local/bin/ssh-agent ]]; then
+  _ssh_agent_bin=/usr/local/bin/ssh-agent
+
+  # Clear ssh-agent var which may be set by the system, the correct socket will be sourced
+  # from $_ssh_agent_env, or created when the prezto agent is started
+  SSH_AUTH_SOCK=
+else
+  _ssh_agent_bin=ssh-agent
+fi
+
+# Ensure correct socket exported.
+if [[ -f $_ssh_agent_env ]]; then
+  source "$_ssh_agent_env" 2> /dev/null
+fi
+
 # Start ssh-agent if not started.
 if [[ ! -S "$SSH_AUTH_SOCK" ]]; then
-  # Export environment variables.
-  source "$_ssh_agent_env" 2> /dev/null
-
-  # Start ssh-agent if not started.
   if ! ps -U "$LOGNAME" -o pid,ucomm | grep -q -- "${SSH_AGENT_PID:--1} ssh-agent"; then
     mkdir -p "$_ssh_agent_env:h"
-    eval "$(ssh-agent | sed '/^echo /d' | tee "$_ssh_agent_env")"
+    eval "$(${_ssh_agent_bin} | sed '/^echo /d' | tee "$_ssh_agent_env")"
   fi
 fi
 
