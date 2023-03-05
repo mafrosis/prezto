@@ -1,11 +1,26 @@
+# vim: ft=zsh sw=2 ts=2 et
 #
 # Defines environment variables.
+# Loaded by _all_ shells, before anything else.
 #
 # Authors:
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
+#   Matt Black <dev@mafro.net>
 #
 
 # Ensure that a non-login, non-interactive shell has a defined environment.
 if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprofile"
 fi
+
+# Ensure path is unique
+typeset -U PATH
+
+# Make ffconv available in shell scripts
+autoload -Uz ~/.zsh-functions/ffconv
+
+# Ensure ~/.local/bin in the PATH
+PATH=${PATH}:${HOME}/.local/bin
+
+# Fix the whacky coreutils ls quoting change - http://unix.stackexchange.com/a/262162/8504
+QUOTING_STYLE=literal

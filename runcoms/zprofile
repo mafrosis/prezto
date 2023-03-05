@@ -1,8 +1,10 @@
 #
 # Executes commands at login pre-zshrc.
+# Loaded only for login shells, _before_ zshrc.
 #
 # Authors:
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
+#   Matt Black <dev@mafro.net>
 #
 
 #
@@ -70,4 +72,47 @@ fi
 # Try both `lesspipe` and `lesspipe.sh` as either might exist on a system.
 if [[ -z "$LESSOPEN" ]] && (( $#commands[(i)lesspipe(|.sh)] )); then
   export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
+fi
+
+#
+# Editor and colour
+#
+export EDITOR=vim
+export VISUAL=vim
+export TERM=xterm-256color
+
+# mafrosis/dotfiles/zsh/bat/mafro.tmTheme
+export BAT_THEME=mafro
+# Pretty manpages (bat)
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+#
+# Homebrew
+#
+if command -v brew >/dev/null 2>&1; then
+  eval $(brew shellenv)
+  export HOMEBREW_NO_ENV_HINTS=1
+  export HOMEBREW_NO_INSTALL_CLEANUP=1
+fi
+
+#
+# Golang
+#
+export GOPATH=${HOME}/Development/go
+export PATH=${PATH}:${GOPATH}/bin:/usr/local/opt/go/libexec/bin
+
+#
+# Python and virtualenv
+#
+# no virtualenv prompt; shown via prezto theme
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
+#
+# AWS and GCP
+#
+export AWS_DEFAULT_REGION=ap-southeast-2
+
+if [[ -v HOMEBREW_PREFIX ]]; then
+  source ${HOMEBREW_PREFIX}/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc
+  source ${HOMEBREW_PREFIX}/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc
 fi

@@ -1,8 +1,10 @@
 #
 # Executes commands at login post-zshrc.
+# Loaded only for login shells, _after_ zshrc.
 #
 # Authors:
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
+#   Matt Black
 #
 
 # Execute code that does not affect the current session in the background.
