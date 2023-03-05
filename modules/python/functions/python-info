@@ -35,26 +35,3 @@ if [[ -n "$virtualenv_format" ]]; then
     python_info[virtualenv]="$virtualenv_formatted"
   fi
 fi
-
-if [[ -n "$version_format" ]]; then
-  if (( $+commands[pyenv] )); then
-    version="${"$(pyenv version)"%% *}"
-  elif (( $+commands[python] )); then
-    version="${$(python3 --version)#Python }"
-  fi
-
-  if [[ -n "$version" && "$version" != "system" ]]; then
-    zformat -f version_formatted "$version_format" "v:$version"
-    python_info[version]="$version_formatted"
-  fi
-fi
-
-# Include current python version info
-python_info[version]="$(python -V 2>&1 | cut -d\  -f 2)"
-
-# Set virtualenv colour based on python version
-if [[ ${python_info[version]:0:1} == '2' ]]; then
-  python_info[prompt_colour]=202
-else
-  python_info[prompt_colour]=070
-fi
