@@ -11,22 +11,24 @@
 # Use GNU coreutils instead of BSD for some programs
 #
 
-_gnu_cmds=(
-  # Coreutils
-  'cut' 'date' 'dircolors' 'du' 'ls' 'md5sum' 'sort' 'tac' 'touch'
+if [[ -v HOMEBREW_PREFIX ]]; then
+  _gnu_cmds=(
+    # Coreutils
+    'cut' 'date' 'dircolors' 'du' 'ls' 'md5sum' 'sort' 'tac' 'touch'
 
-  # Misc
-  'sed'
-)
-for _cmd in "${_gnu_cmds[@]}"; do
-	if [[ -x /usr/local/bin/g${_cmd} ]]; then
-		eval "
-			function ${_cmd} {
-				g${_cmd} \"\$@\"
-			}
-		"
-	fi
-done
+    # Misc
+    'sed'
+  )
+  for _cmd in "${_gnu_cmds[@]}"; do
+    if [[ -x $HOMEBREW_PREFIX/bin/g${_cmd} ]]; then
+      eval "
+        function ${_cmd} {
+          $HOMEBREW_PREFIX/bin/g${_cmd} \"\$@\"
+        }
+      "
+    fi
+  done
+fi
 
 #
 # General
