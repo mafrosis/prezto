@@ -1,3 +1,4 @@
+# vim: ft=zsh sw=2 ts=2 et
 #
 # Executes commands at login pre-zshrc.
 # Loaded only for login shells, _before_ zshrc.
@@ -93,6 +94,10 @@ if command -v brew >/dev/null 2>&1; then
   eval $(brew shellenv)
   export HOMEBREW_NO_ENV_HINTS=1
   export HOMEBREW_NO_INSTALL_CLEANUP=1
+
+  # include Homebrew completions
+  # add to fpath before prezto calls compinit
+  export FPATH=${HOMEBREW_PREFIX}/share/zsh/site-functions:${FPATH}
 fi
 
 #
