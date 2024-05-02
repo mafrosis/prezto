@@ -80,6 +80,7 @@ function prompt_mafro_setup {
 
   # Display virtualenv name
   zstyle ':prezto:module:python:info:virtualenv' format ' %F{070}[%v]%f'
+  zstyle ':prezto:module:python:info:hatchenv' format ' %F{033}[%v]%f'
 
   # Reset colours and build prompt
   PROMPT='%{%f%b%k%}$(build_prompt)'

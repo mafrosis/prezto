@@ -111,6 +111,7 @@ export PATH=${PATH}:${GOPATH}/bin:/usr/local/opt/go/libexec/bin
 #
 # no virtualenv prompt; shown via prezto theme
 export VIRTUAL_ENV_DISABLE_PROMPT=1
+export HATCH_CONFIG=~/.config/hatch/config.toml
 
 #
 # AWS and GCP
