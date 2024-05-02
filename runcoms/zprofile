@@ -117,7 +117,7 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 #
 export AWS_DEFAULT_REGION=ap-southeast-2
 
-if [[ -v HOMEBREW_PREFIX ]]; then
+if [[ -f ${HOMEBREW_PREFIX}/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc ]]; then
   source ${HOMEBREW_PREFIX}/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc
   source ${HOMEBREW_PREFIX}/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc
 fi
