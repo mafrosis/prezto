@@ -62,10 +62,10 @@ zstyle ':prezto:load' pmodule \
   'git' \
   'osx' \
   'python' \
-  'completion' \
   'ssh' \
   'history-substring-search' \
-  'prompt'
+  'prompt' \
+  'completion'
 
 #
 # Autosuggestions
