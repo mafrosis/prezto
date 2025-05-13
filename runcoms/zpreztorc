@@ -61,10 +61,8 @@ zstyle ':prezto:load' pmodule \
   'directory' \
   'git' \
   'osx' \
-  'python' \
   'ssh' \
   'history-substring-search' \
-  'prompt' \
   'completion'
 
 #
@@ -174,7 +172,7 @@ zstyle ':prezto:module:history-substring-search:color' not-found 'fg=124,bold'
 # Set the prompt theme to load.
 # Setting it to 'random' loads a random theme.
 # Auto set to 'off' on dumb terminals.
-zstyle ':prezto:module:prompt' theme 'mafro'
+# zstyle ':prezto:module:prompt' theme 'mafro'
 
 # Set the working directory prompt display length.
 # By default, it is set to 'short'. Set it to 'long' (without '~' expansion)
