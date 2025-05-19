@@ -24,3 +24,6 @@ PATH=${PATH}:${HOME}/.local/bin
 
 # Fix the whacky coreutils ls quoting change - http://unix.stackexchange.com/a/262162/8504
 QUOTING_STYLE=literal
+
+# Around May 2025 git started complaining this was undefined
+export TMPDIR=${TMPDIR:-/tmp}
